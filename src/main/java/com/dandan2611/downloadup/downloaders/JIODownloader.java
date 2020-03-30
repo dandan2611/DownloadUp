@@ -124,6 +124,7 @@ public class JIODownloader extends AbstractDownloader {
 
                         if(byteContent == -1) {
                             downloader.stopDownload();
+                            downloader.outputStream.close();
                             return;
                         }
                         else {
