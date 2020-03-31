@@ -1,5 +1,8 @@
 package com.dandan2611.downloadup.downloaders;
 
+import com.dandan2611.downloadup.hook.DownloaderHook;
+import com.dandan2611.downloadup.hook.EmptyDownloaderHook;
+
 import java.io.File;
 
 public abstract class AbstractDownloader {
@@ -67,6 +70,11 @@ public abstract class AbstractDownloader {
     private Thread downloaderThread;
 
     /**
+     * Downloader event hook
+     */
+    private DownloaderHook hook;
+
+    /**
      * Create a downloader
      * @param url File URL
      * @param async Should we run the downloader in a Thread ?
@@ -76,6 +84,14 @@ public abstract class AbstractDownloader {
         this.downloadUrl = url;
         this.outputFile = outputFile;
         this.async = async;
+    }
+
+    /**
+     * Set event hook
+     * @param hook New event hook
+     */
+    public void setHook(DownloaderHook hook) {
+        this.hook = hook;
     }
 
     protected Thread getDownloaderThread() {
@@ -96,6 +112,10 @@ public abstract class AbstractDownloader {
 
     public boolean isAsync() {
         return this.async;
+    }
+
+    public DownloaderHook getHook() {
+        return hook == null ? new EmptyDownloaderHook() : hook;
     }
 
 }

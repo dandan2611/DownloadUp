@@ -1,13 +1,16 @@
-package com.dandan2611.downloadup.test;
+package com.dandan2611.downloadup.tests;
 
 import com.dandan2611.downloadup.downloaders.AbstractDownloader;
 import com.dandan2611.downloadup.downloaders.JIODownloader;
+import com.dandan2611.downloadup.hook.DownloaderHook;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 import java.io.File;
 
 public class DownloadUpTester {
 
+    @Test
     public void testDownloaders() {
 
         final long startMillis = System.currentTimeMillis();
@@ -49,6 +52,8 @@ public class DownloadUpTester {
         downloader.prepare();
         System.out.println("Launching download...");
         downloader.download();
+        System.out.println("Download finished, disposing...");
+        downloader.dispose();
     }
 
     private void advert(String title) {

@@ -53,6 +53,8 @@ public class JIODownloader extends AbstractDownloader {
         // Creating FileOutputStream
         this.outputStream = new FileOutputStream(getOutputFile());
 
+        getHook().onDownloadPrepared(this);
+
     }
 
     @Override
@@ -68,6 +70,8 @@ public class JIODownloader extends AbstractDownloader {
         // Cleaning memory
         this.urlBufferedInputStream = null;
         this.urlInputStream = null;
+
+        getHook().onDownloadDisposed(this);
 
     }
 
@@ -88,11 +92,14 @@ public class JIODownloader extends AbstractDownloader {
     @Override
     public void setDownloading(boolean paused) {
         this.state = paused ? 0 : 1;
+        if(state == 0) getHook().onDownloadPaused(this);
+        else getHook().onDownloadResumed(this);
     }
 
     @Override
     public void stopDownload() {
         this.state = -1;
+        getHook().onDownloadStopped(this);
     }
 
     protected boolean isCancelled() {
@@ -110,6 +117,8 @@ public class JIODownloader extends AbstractDownloader {
         @Override
         public void run() {
 
+            downloader.getHook().onDownloadStarted(downloader);
+
             try {
 
                 int byteContent;
@@ -124,6 +133,7 @@ public class JIODownloader extends AbstractDownloader {
 
                         if(byteContent == -1) {
                             downloader.stopDownload();
+                            downloader.getHook().onDownloadFinished(downloader);
                             downloader.outputStream.close();
                             return;
                         }
