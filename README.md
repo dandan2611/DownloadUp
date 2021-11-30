@@ -1,6 +1,5 @@
 # DownloadUp
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0) 
-[![Build Status](http://gameinbox.eu:8080/buildStatus/icon?job=DownloadUp)](http://gameinbox.eu:8080/job/DownloadUp/)
 [![Github All Releases](https://img.shields.io/github/downloads/dandan2611/downloadup/total.svg?style=flat)]() 
 
 The ultimate Java download library - Feel free to contribute !
